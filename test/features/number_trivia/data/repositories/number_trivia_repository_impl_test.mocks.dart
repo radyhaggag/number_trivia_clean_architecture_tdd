@@ -94,17 +94,16 @@ class MockNumberTriviaRemoteDataSource extends _i1.Mock
 class MockNumberTriviaLocalDataSource extends _i1.Mock
     implements _i5.NumberTriviaLocalDataSource {
   @override
-  _i4.Future<_i2.NumberTrivia> getLastNumberTrivia(int? number) =>
-      (super.noSuchMethod(
+  _i4.Future<_i2.NumberTrivia> getLastNumberTrivia() => (super.noSuchMethod(
         Invocation.method(
           #getLastNumberTrivia,
-          [number],
+          [],
         ),
         returnValue: _i4.Future<_i2.NumberTrivia>.value(_FakeNumberTrivia_0(
           this,
           Invocation.method(
             #getLastNumberTrivia,
-            [number],
+            [],
           ),
         )),
         returnValueForMissingStub:
@@ -112,7 +111,7 @@ class MockNumberTriviaLocalDataSource extends _i1.Mock
           this,
           Invocation.method(
             #getLastNumberTrivia,
-            [number],
+            [],
           ),
         )),
       ) as _i4.Future<_i2.NumberTrivia>);

@@ -1,6 +1,6 @@
 import '../../domain/entities/number_trivia.dart';
 
 abstract class NumberTriviaLocalDataSource {
-  Future<NumberTrivia> getLastNumberTrivia(int number);
+  Future<NumberTrivia> getLastNumberTrivia();
   Future<void> cacheNumberTrivia(NumberTrivia numberTrivia);
 }

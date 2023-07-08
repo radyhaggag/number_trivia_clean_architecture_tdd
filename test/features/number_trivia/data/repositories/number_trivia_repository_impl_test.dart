@@ -104,9 +104,132 @@ void main() {
         expect(result, equals(const Left(ServerFailure(''))));
       });
     });
-    group('device is offline', () {
+    group('device is Offline', () {
       setUp(() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+      });
+
+      test(
+          'should return last cached data when the cached data present and the device is offline',
+          () async {
+        // arrange
+        when(mockNumberTriviaLocalDataSource.getLastNumberTrivia())
+            .thenAnswer((_) async => tNumberModel);
+        // act
+        final result =
+            await numberTriviaRepositoryImpl.getConcreteNumberTrivia(tNumber);
+        // assert
+        verifyZeroInteractions(mockNumberTriviaRemoteDataSource);
+        verify(mockNumberTriviaLocalDataSource.getLastNumberTrivia());
+        expect(result, equals(const Right(tNumberEntity)));
+      });
+      test('should throw CacheException when no cached data present', () async {
+        // arrange
+        when(mockNumberTriviaLocalDataSource.getLastNumberTrivia())
+            .thenThrow(CacheException());
+        // act
+        final result =
+            await numberTriviaRepositoryImpl.getConcreteNumberTrivia(tNumber);
+        // assert
+        verifyZeroInteractions(mockNumberTriviaRemoteDataSource);
+        verify(mockNumberTriviaLocalDataSource.getLastNumberTrivia());
+        expect(result, equals(const Left(CacheFailure('no data'))));
+      });
+    });
+  });
+
+  group('getRandomNumberTrivia', () {
+    const tNumberModel = NumberTriviaModel(text: 'test', number: 300);
+    const NumberTrivia tNumberEntity = tNumberModel;
+    test('should check if the device connected to internet', () async {
+      // arrange
+      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      // act
+      numberTriviaRepositoryImpl.getRandomNumberTrivia();
+      //assert
+      verify(mockNetworkInfo.isConnected);
+    });
+
+    group('device is online', () {
+      setUp(() {
+        when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      });
+
+      test(
+          'should return remote data when the call for remote data source success',
+          () async {
+        // arrange
+        when(mockNumberTriviaRemoteDataSource.getRandomNumberTrivia())
+            .thenAnswer((_) async => tNumberModel);
+        // act
+        final result = await numberTriviaRepositoryImpl.getRandomNumberTrivia();
+        // assert
+        verify(
+          mockNumberTriviaRemoteDataSource.getRandomNumberTrivia(),
+        );
+        expect(result, equals(const Right(tNumberEntity)));
+      });
+
+      test('should cache data when the call for remote data source success',
+          () async {
+        // arrange
+        when(mockNumberTriviaRemoteDataSource.getRandomNumberTrivia())
+            .thenAnswer((_) async => tNumberModel);
+        // act
+        await numberTriviaRepositoryImpl.getRandomNumberTrivia();
+        // assert
+        verify(
+          mockNumberTriviaRemoteDataSource.getRandomNumberTrivia(),
+        );
+        verify(
+          mockNumberTriviaLocalDataSource.cacheNumberTrivia(tNumberModel),
+        );
+      });
+
+      test(
+          'should return server failure when the call for remote data source unsuccess',
+          () async {
+        // arrange
+        when(mockNumberTriviaRemoteDataSource.getRandomNumberTrivia())
+            .thenThrow(ServerException());
+        // act
+        final result = await numberTriviaRepositoryImpl.getRandomNumberTrivia();
+        // assert
+        verify(
+          mockNumberTriviaRemoteDataSource.getRandomNumberTrivia(),
+        );
+        verifyZeroInteractions(mockNumberTriviaLocalDataSource);
+        expect(result, equals(const Left(ServerFailure(''))));
+      });
+    });
+    group('device is Offline', () {
+      setUp(() {
+        when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+      });
+
+      test(
+          'should return last cached data when the cached data present and the device is offline',
+          () async {
+        // arrange
+        when(mockNumberTriviaLocalDataSource.getLastNumberTrivia())
+            .thenAnswer((_) async => tNumberModel);
+        // act
+        final result = await numberTriviaRepositoryImpl.getRandomNumberTrivia();
+        // assert
+        verifyZeroInteractions(mockNumberTriviaRemoteDataSource);
+        verify(mockNumberTriviaLocalDataSource.getLastNumberTrivia());
+        expect(result, equals(const Right(tNumberEntity)));
+      });
+      test('should throw CacheException when no cached data present', () async {
+        // arrange
+        when(mockNumberTriviaLocalDataSource.getLastNumberTrivia())
+            .thenThrow(CacheException());
+        // act
+        final result = await numberTriviaRepositoryImpl.getRandomNumberTrivia();
+        // assert
+        verifyZeroInteractions(mockNumberTriviaRemoteDataSource);
+        verify(mockNumberTriviaLocalDataSource.getLastNumberTrivia());
+        expect(result, equals(const Left(CacheFailure('no data'))));
       });
     });
   });
