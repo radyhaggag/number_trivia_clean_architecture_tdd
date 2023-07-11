@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:number_trivia_clean_architecture_tdd/core/error/exceptions.dart';
+import 'package:number_trivia_clean_architecture_tdd/features/number_trivia/data/models/number_trivia_model.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/network/network_info.dart';
@@ -44,7 +45,9 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
     if (await networkInfo.isConnected) {
       try {
         final result = await concreteOrRandom();
-        await numberTriviaLocalDataSource.cacheNumberTrivia(result);
+        await numberTriviaLocalDataSource.cacheNumberTrivia(
+          result as NumberTriviaModel,
+        );
         return Right(result);
       } on ServerException {
         return const Left(ServerFailure(''));

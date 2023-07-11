@@ -1,6 +1,6 @@
-import '../../domain/entities/number_trivia.dart';
+import '../models/number_trivia_model.dart';
 
 abstract class NumberTriviaRemoteDataSource {
-  Future<NumberTrivia> getConcreteNumberTrivia(int number);
-  Future<NumberTrivia> getRandomNumberTrivia();
+  Future<NumberTriviaModel> getConcreteNumberTrivia(int number);
+  Future<NumberTriviaModel> getRandomNumberTrivia();
 }
