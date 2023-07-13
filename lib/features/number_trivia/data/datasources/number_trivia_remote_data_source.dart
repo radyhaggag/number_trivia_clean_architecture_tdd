@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:number_trivia_clean_architecture_tdd/core/error/exceptions.dart';
+
 import '../../../../core/api/api_consumer.dart';
 
 import '../models/number_trivia_model.dart';
@@ -13,14 +16,22 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
   NumberTriviaRemoteDataSourceImpl(this.apiConsumer);
 
   @override
-  Future<NumberTriviaModel> getConcreteNumberTrivia(int number) {
-    // TODO: implement getConcreteNumberTrivia
-    throw UnimplementedError();
+  Future<NumberTriviaModel> getConcreteNumberTrivia(int number) async {
+    return await _getTrivia('$number');
   }
 
   @override
-  Future<NumberTriviaModel> getRandomNumberTrivia() {
-    // TODO: implement getRandomNumberTrivia
-    throw UnimplementedError();
+  Future<NumberTriviaModel> getRandomNumberTrivia() async {
+    return await _getTrivia('random');
+  }
+
+  Future<NumberTriviaModel> _getTrivia(String endpoint) async {
+    final result = await apiConsumer.get(endpoint: endpoint) as Response;
+    if (result.statusCode == 200) {
+      final numberTrivia = NumberTriviaModel.fromJson(result.data);
+      return numberTrivia;
+    } else {
+      throw ServerException();
+    }
   }
 }

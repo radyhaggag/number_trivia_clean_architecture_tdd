@@ -13,15 +13,17 @@ class DioConsumer implements ApiConsumer {
   final Dio _dio;
 
   DioConsumer(this._dio) {
-    initDio();
+    _initDio();
   }
 
-  initDio() {
+  _initDio() {
     _dio.options = BaseOptions(
       baseUrl: BASE_URL,
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
-      contentType: 'application/json',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     );
   }
 
@@ -34,6 +36,6 @@ class DioConsumer implements ApiConsumer {
       endpoint,
       queryParameters: queryParams,
     );
-    return response.data;
+    return response;
   }
 }
