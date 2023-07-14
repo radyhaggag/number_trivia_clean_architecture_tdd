@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:number_trivia_clean_architecture_tdd/core/error/exceptions.dart';
+import '../../../../core/error/exceptions.dart';
 
 import '../../../../core/api/api_consumer.dart';
 
