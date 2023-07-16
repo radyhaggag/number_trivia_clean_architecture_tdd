@@ -1,16 +1,40 @@
-# number_trivia_clean_architecture_tdd
+# Flutter Unit Testing with Number trivia app
 
-A new Flutter project.
+This application was developed using a well-defined and decoupled architecture, following TDD (test-driven programming) as a working methodology, Clean Architecture to make the distribution of responsibilities in layers, always following the SOLID principles. With the intention of practicing the teachings of the (Flutter, TDD, Clean Architecture, SOLID e Design Patterns).
 
-## Getting Started
+This app implementing Flutter Clean Architecture with TDD.
 
-This project is a starting point for a Flutter application.
+## Architecture Proposal by [Resocoder](https://github.com/ResoCoder/flutter-tdd-clean-architecture-course)
 
-A few resources to get you started if this is your first Flutter project:
+- [Youtube tutorial](https://www.youtube.com/playlist?list=PLB6lc7nQ1n4iYGE_khpXRdJkJEp9WOech)
+- [Written tutorial for starting on unit testing](https://maxzodblog.blogspot.com/2022/05/intro-for-unit-testing.html?fbclid=IwAR2kE9bWsmr0MUsEAXkRAqon66VN-TZDSWQYwuTT1kwjYGAFRNxhgwq-slE)
+  <br>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![architecture-proposal](./architecture-proposal.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Get Started 🚀
+
+- Clone this project
+- Run `flutter pub get`
+- Run Test `flutter test`
+- To generate mock class `flutter pub run build_runner build`
+
+## Features ✅
+
+- [x] BLoC State Management
+- [x] **Clean Architecture with TDD**
+  - [x] Unit Test
+  - [x] BLoC test
+- [x] Internet connection checker
+
+## Libraries and Tools
+
+- bloc
+- bloc_test
+- equatable
+- flutter_bloc
+- dio
+- shared_preferences
+- mockito
+- internet_connection_checker
+- get_it
