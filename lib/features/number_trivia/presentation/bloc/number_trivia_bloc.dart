@@ -24,13 +24,13 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     on<GetTriviaForRandomNumber>(_getTriviaForRandomNumber);
   }
 
-  FutureOr<void> _getTriviaForConcreteNumber(
+  Future<void> _getTriviaForConcreteNumber(
     GetTriviaForConcreteNumber event,
     Emitter<NumberTriviaState> emit,
   ) async {
     emit(NumberTriviaLoading());
     final result = inputConverter.stringToUnsignedInteger(event.stringNumber);
-    result.fold(
+    await result.fold(
       (l) {
         emit(NumberTriviaLoadingError(l.message));
       },
@@ -45,7 +45,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     );
   }
 
-  FutureOr<void> _getTriviaForRandomNumber(
+  Future<void> _getTriviaForRandomNumber(
     GetTriviaForRandomNumber event,
     Emitter<NumberTriviaState> emit,
   ) async {
