@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
-import '../../../../core/error/exceptions.dart';
 
 import '../../../../core/api/api_consumer.dart';
-
+import '../../../../core/error/exceptions.dart';
 import '../models/number_trivia_model.dart';
 
 abstract class NumberTriviaRemoteDataSource {
